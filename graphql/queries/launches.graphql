@@ -1,0 +1,8 @@
+query Launches {
+  launches(orderBy: date_ASC) {
+    id
+    name
+    date
+    slug
+  }
+}
