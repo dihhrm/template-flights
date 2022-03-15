@@ -1,8 +1,9 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useLaunchesQuery, LaunchesDocument } from '../generated/graphql';
-import { client } from '../lib/apollo';
+import { initializeApollo } from '../lib/apollo';
 import styles from '../styles/Home.module.css';
+import Main from '../components/Main';
 
 export default function Home() {
   const { data } = useLaunchesQuery();
@@ -16,18 +17,16 @@ export default function Home() {
       </Head>
 
       <ul>
-        <h1>{data?.launches.map((i) => i.name)}</h1>
-        {/* {data.map((item) => (
-          <li key={item.id}>{item.name}</li>
-        ))} */}
+        <Main data={data?.launches} />
       </ul>
     </div>
   );
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const client = initializeApollo();
   await client.query({ query: LaunchesDocument });
   return {
-    props: {},
+    props: { initialApolloState: client.cache.extract() },
   };
 };

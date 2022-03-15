@@ -1,0 +1,12 @@
+query GetLaunch($id: ID!) {
+  launch(where: { id: $id }) {
+    id
+    name
+    rocket {
+      image {
+        id
+        url
+      }
+    }
+  }
+}

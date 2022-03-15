@@ -1,8 +1,13 @@
 query Launches {
-  launches(orderBy: date_ASC) {
+  launches(orderBy: date_DESC) {
     id
     name
     date
     slug
+    launchSite {
+      id
+      name
+      longName
+    }
   }
 }

@@ -5759,19 +5759,73 @@ export enum _SystemDateTimeFieldVariation {
   Localization = 'localization'
 }
 
+export type GetLaunchQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetLaunchQuery = { __typename?: 'Query', launch?: { __typename?: 'Launch', id: string, name: string, rocket?: { __typename?: 'Rocket', image?: { __typename?: 'Asset', id: string, url: string } | null } | null } | null };
+
 export type LaunchesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LaunchesQuery = { __typename?: 'Query', launches: Array<{ __typename?: 'Launch', id: string, name: string, date: any, slug?: string | null }> };
+export type LaunchesQuery = { __typename?: 'Query', launches: Array<{ __typename?: 'Launch', id: string, name: string, date: any, slug?: string | null, launchSite?: { __typename?: 'LaunchSite', id: string, name: string, longName: string } | null }> };
 
 
+export const GetLaunchDocument = gql`
+    query GetLaunch($id: ID!) {
+  launch(where: {id: $id}) {
+    id
+    name
+    rocket {
+      image {
+        id
+        url
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetLaunchQuery__
+ *
+ * To run a query within a React component, call `useGetLaunchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLaunchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLaunchQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetLaunchQuery(baseOptions: Apollo.QueryHookOptions<GetLaunchQuery, GetLaunchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLaunchQuery, GetLaunchQueryVariables>(GetLaunchDocument, options);
+      }
+export function useGetLaunchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLaunchQuery, GetLaunchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLaunchQuery, GetLaunchQueryVariables>(GetLaunchDocument, options);
+        }
+export type GetLaunchQueryHookResult = ReturnType<typeof useGetLaunchQuery>;
+export type GetLaunchLazyQueryHookResult = ReturnType<typeof useGetLaunchLazyQuery>;
+export type GetLaunchQueryResult = Apollo.QueryResult<GetLaunchQuery, GetLaunchQueryVariables>;
 export const LaunchesDocument = gql`
     query Launches {
-  launches(orderBy: date_ASC) {
+  launches(orderBy: date_DESC) {
     id
     name
     date
     slug
+    launchSite {
+      id
+      name
+      longName
+    }
   }
 }
     `;
