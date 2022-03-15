@@ -5760,7 +5760,7 @@ export enum _SystemDateTimeFieldVariation {
 }
 
 export type GetLaunchQueryVariables = Exact<{
-  id: Scalars['ID'];
+  slug: Scalars['String'];
 }>;
 
 
@@ -5773,8 +5773,8 @@ export type LaunchesQuery = { __typename?: 'Query', launches: Array<{ __typename
 
 
 export const GetLaunchDocument = gql`
-    query GetLaunch($id: ID!) {
-  launch(where: {id: $id}) {
+    query GetLaunch($slug: String!) {
+  launch(where: {slug: $slug}) {
     id
     name
     rocket {
@@ -5799,7 +5799,7 @@ export const GetLaunchDocument = gql`
  * @example
  * const { data, loading, error } = useGetLaunchQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      slug: // value for 'slug'
  *   },
  * });
  */

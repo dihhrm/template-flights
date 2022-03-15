@@ -8,9 +8,12 @@ export default function Main({ data }) {
       <Header />
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         {data?.map((item) => (
-          <a key={item.id} href={`/${item.id}`}>
-            <LaunchCard title={item.date} stat={item.name} />
-          </a>
+          <LaunchCard
+            key={item.id}
+            href={item.slug}
+            title={item.date}
+            stat={item.name}
+          />
         ))}
       </SimpleGrid>
     </Box>

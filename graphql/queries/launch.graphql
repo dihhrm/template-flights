@@ -1,5 +1,5 @@
-query GetLaunch($id: ID!) {
-  launch(where: { id: $id }) {
+query GetLaunch($slug: String!) {
+  launch(where: { slug: $slug }) {
     id
     name
     rocket {
